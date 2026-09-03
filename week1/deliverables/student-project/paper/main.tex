@@ -1,0 +1,162 @@
+\documentclass[letterpaper]{article}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+\title{A Belief-Based Triage Agent for Wearable ECG Alerts:\\
+Cost-Asymmetric Decision Making Under Hidden State Uncertainty}
+
+\author{
+    Student Preprint\\
+    AI Native Shipping Sprint --- Week 1\\
+    Belief Engine Course\\
+    \texttt{https://github.com/Julie-max/ai-native-sprint}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------
+\begin{abstract}
+%----------------------------------------------------------
+I built an agent that checks a person's ECG from a wearable device
+and decides if they need to visit a doctor by reading the ECG ST
+segment along with prior history and symptoms of the person wearing
+it. The existing approaches are simple static boundaries for alerts
+on ECG abnormalities which have high accuracy but miss critical
+cases. My agent has a cost-based belief system which is updated
+constantly upon new evidence and discovery; it also holds its
+decision if there is ambiguity. The thresholds set are: escalate
+above 35\% STEMI probability and dismiss below 0.02\% STEMI
+probability, derived from a cost asymmetry of \$500,000 for a
+missed critical alert versus \$200 for an unnecessary escalation
+--- a ratio of 2,500:1.
+\end{abstract}
+
+%----------------------------------------------------------
+\section{Introduction}
+%----------------------------------------------------------
+The problem that exists is that every wearable ECG device out there,
+and there are many, has simple threshold alarms that treat false
+electrode artifacts and critical STEMI alerts as the same case.
+Accuracy as a metric hides this failure: a classifier that is 95\%
+accurate but always wrong on the critical 5\% is not 95\% useful
+--- it is actively dangerous.
+My agent works with a cost-based belief system that reasons with
+given evidence before making a decision, replacing the dumb
+threshold alarm with a three-action belief engine that distinguishes
+between hidden states.
+
+%----------------------------------------------------------
+\section{Agent Design}
+%----------------------------------------------------------
+My four inputs for the agent are ST segment ECG morphology, age,
+prior medical history, and symptoms experienced. The three hidden
+states are True STEMI, Hyperventilation, and Electrode Artifact.
+The three actions are: Escalation with an alert to consult a doctor,
+Dismiss the alert, or HOLD for further evidence.
+
+The policy is that escalation triggers above 35\% STEMI probability,
+dismissal triggers below 0.02\%, and everything in between causes
+the agent to HOLD for further evidence. Upon new evidence, the
+belief is updated such that the probabilities change and are
+re-evaluated against the thresholds.
+
+\subsection*{Threshold Derivation}
+
+Thresholds are derived from expected cost calculations:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Threshold} & \textbf{Calculation} & \textbf{Result} \\
+\midrule
+Dismiss (0.02\%) & $0.0002 \times \$500{,}000$ vs $0.9998 \times \$200$ & \$100 $<$ \$199.96 \\
+Escalate (35\%) & $0.35 \times \$500{,}000$ vs $0.65 \times \$200$ & \$175{,}000 $\gg$ \$130 \\
+\bottomrule
+\end{tabular}
+\caption{Expected cost derivation for action thresholds}
+\end{table}
+
+\subsection*{Cost Model}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Outcome} & \textbf{Cost} \\
+\midrule
+Missed true STEMI & \$500,000 \\
+Unnecessary escalation & \$200 \\
+Cost asymmetry ratio & 2,500:1 \\
+\bottomrule
+\end{tabular}
+\caption{Cost model for the triage agent}
+\end{table}
+
+%----------------------------------------------------------
+\section{Experiments}
+%----------------------------------------------------------
+For the experiments, 20 handcrafted test cases have been created,
+each with a combination for each hidden state. For example, a case
+with 7\% STEMI probability has its belief updated upon feature
+change until crossing a threshold for a definite action to be taken
+--- starting at HOLD, updating through family history confirmation
+(12\%), symptom onset (28\%), and diaphoresis (42\%), at which
+point the agent escalates. Most cases land in HOLD as the agent is
+conservative by design and appropriately so for this problem
+statement.
+
+%----------------------------------------------------------
+\section{Discussion}
+%----------------------------------------------------------
+The discussion on Reddit taught me how the agent I am building is
+different from a simple wearable device having a dumb threshold ---
+rather, what we have is an agent that updates its belief on new
+evidence before acting. One limitation is that the test cases are
+simulated and not drawn from actual clinical recordings. Future
+directions include using real MIT-BIH Arrhythmia Database data and
+defining a maximum HOLD time, since HOLD cannot persist indefinitely
+--- if no new evidence arrives within a defined window, the agent
+escalates by default, because in cardiac events, indefinite waiting
+is itself a dangerous action.
+
+%----------------------------------------------------------
+\section*{Acknowledgements}
+%----------------------------------------------------------
+Reddit community r/BiomedicalEngineers for feedback on cost-ratio
+realism and agent framing. Belief Engine Course, Week 1.
+
+%----------------------------------------------------------
+\begin{thebibliography}{9}
+%----------------------------------------------------------
+
+\bibitem{mitbih}
+Moody, G.B. and Mark, R.G. (1992).
+\textit{The impact of the MIT-BIH Arrhythmia Database}.
+IEEE Engineering in Medicine and Biology Magazine, 20(3), 45--50.
+PhysioNet: \url{https://physionet.org/content/mitdb/}
+
+\bibitem{stemi}
+Thygesen, K. et al. (2018).
+\textit{Fourth Universal Definition of Myocardial Infarction}.
+Journal of the American College of Cardiology, 72(18), 2231--2264.
+
+\bibitem{wearable}
+Hannun, A.Y. et al. (2019).
+\textit{Cardiologist-level arrhythmia detection and classification
+in ambulatory electrocardiograms using a deep neural network}.
+Nature Medicine, 25, 65--69.
+
+\end{thebibliography}
+
+\end{document}
