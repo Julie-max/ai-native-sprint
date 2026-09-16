@@ -27,6 +27,9 @@ hyperventilation is not known.
 | paper/main.tex | LaTeX preprint |
 | social/ | LinkedIn and X posts |
 
+### Architecture
+![Agent Architecture](paper/figures/ecg_triage_agent_architecture.svg)
+
 ### Dataset
 
 MIT-BIH Arrhythmia Database — physionet.org
