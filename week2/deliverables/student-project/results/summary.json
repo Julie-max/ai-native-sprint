@@ -1,0 +1,502 @@
+{
+  "seed": 42,
+  "n_cases": 150,
+  "truth_counts": {
+    "artifact": 83,
+    "hyperventilation": 62,
+    "stemi": 5
+  },
+  "priors": {
+    "stemi": 0.07,
+    "artifact": 0.6,
+    "hyperventilation": 0.33
+  },
+  "prior_entropy": 1.2385569284772917,
+  "fatigue_for_voi": 5,
+  "note": "Simulation uses the agent's own likelihood tables. It validates policy, not likelihoods.",
+  "clue_entropy_value": [
+    {
+      "name": "chest_pain",
+      "price": 2,
+      "entropy_before": 1.2385569284772917,
+      "expected_ig": 0.21535054508718843,
+      "bits_per_dollar": 0.10767527254359421,
+      "expected_cost_if_wait": 202.0
+    },
+    {
+      "name": "mishandling",
+      "price": 2,
+      "entropy_before": 1.2385569284772917,
+      "expected_ig": 0.4454361724228162,
+      "bits_per_dollar": 0.2227180862114081,
+      "expected_cost_if_wait": 202.0
+    },
+    {
+      "name": "poor_signal",
+      "price": 2,
+      "entropy_before": 1.2385569284772917,
+      "expected_ig": 0.7227307721675917,
+      "bits_per_dollar": 0.36136538608379587,
+      "expected_cost_if_wait": 202.0
+    },
+    {
+      "name": "heavy_exercise",
+      "price": 2,
+      "entropy_before": 1.2385569284772917,
+      "expected_ig": 0.5513763417204328,
+      "bits_per_dollar": 0.2756881708602164,
+      "expected_cost_if_wait": 202.0
+    }
+  ],
+  "clue_mutual_information": [
+    {
+      "name": "chest_pain",
+      "mutual_information": 0.16121986901706253,
+      "p_answer": {
+        "yes": 0.25218137254901957,
+        "no": 0.7478186274509804
+      }
+    },
+    {
+      "name": "mishandling",
+      "mutual_information": 0.3032296740531617,
+      "p_answer": {
+        "yes": 0.6555384615384616,
+        "no": 0.3444615384615385
+      }
+    },
+    {
+      "name": "poor_signal",
+      "mutual_information": 0.5466923120156638,
+      "p_answer": {
+        "yes": 0.5760195360195359,
+        "no": 0.42398046398046396
+      }
+    },
+    {
+      "name": "heavy_exercise",
+      "mutual_information": 0.2075500393141907,
+      "p_answer": {
+        "yes": 0.5191764705882354,
+        "no": 0.48082352941176465
+      }
+    }
+  ],
+  "best_clue_at_prior": "poor_signal",
+  "js_prior_vs_uniform": 0.09527564932498578,
+  "worked_update": {
+    "case_id": 0,
+    "truth": "artifact",
+    "clue": "poor_signal",
+    "answer": "yes",
+    "prior": {
+      "stemi": 0.07,
+      "artifact": 0.6,
+      "hyperventilation": 0.33
+    },
+    "posterior": {
+      "stemi": 0.0059322033898305095,
+      "artifact": 0.9661016949152542,
+      "hyperventilation": 0.027966101694915257
+    },
+    "entropy_before": 1.2385569284772917,
+    "entropy_after": 0.23625831822155047
+  },
+  "metrics": {
+    "P0_dismiss": {
+      "n": 150,
+      "accuracy": 0.9666666666666667,
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 5,
+      "tn": 145,
+      "decision_cost": 2500000.0,
+      "info_cost": 0.0,
+      "total_cost": 2500000.0,
+      "questions_avg": 0.0,
+      "human_review_rate": 0.0,
+      "brier": 0.03356666666666666,
+      "stemi_caught": 0,
+      "stemi_missed": 5,
+      "false_alarms": 0
+    },
+    "P0_alarm": {
+      "n": 150,
+      "accuracy": 0.03333333333333333,
+      "precision": 0.03333333333333333,
+      "recall": 1.0,
+      "tp": 5,
+      "fp": 145,
+      "fn": 0,
+      "tn": 0,
+      "decision_cost": 29000.0,
+      "info_cost": 0.0,
+      "total_cost": 29000.0,
+      "questions_avg": 0.0,
+      "human_review_rate": 1.0,
+      "brier": 0.03356666666666666,
+      "stemi_caught": 5,
+      "stemi_missed": 0,
+      "false_alarms": 145
+    },
+    "P1_map": {
+      "n": 150,
+      "accuracy": 0.9666666666666667,
+      "precision": 0.0,
+      "recall": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 5,
+      "tn": 145,
+      "decision_cost": 2500000.0,
+      "info_cost": 0.0,
+      "total_cost": 2500000.0,
+      "questions_avg": 0.0,
+      "human_review_rate": 0.0,
+      "brier": 0.019593643909077352,
+      "stemi_caught": 0,
+      "stemi_missed": 5,
+      "false_alarms": 0
+    },
+    "P2_threshold": {
+      "n": 150,
+      "accuracy": 0.4266666666666667,
+      "precision": 0.054945054945054944,
+      "recall": 1.0,
+      "tp": 5,
+      "fp": 86,
+      "fn": 0,
+      "tn": 59,
+      "decision_cost": 17200.0,
+      "info_cost": 0.0,
+      "total_cost": 17200.0,
+      "questions_avg": 0.0,
+      "human_review_rate": 0.6066666666666667,
+      "brier": 0.019593643909077352,
+      "stemi_caught": 5,
+      "stemi_missed": 0,
+      "false_alarms": 86
+    },
+    "P3_fatigue0": {
+      "n": 150,
+      "accuracy": 0.03333333333333333,
+      "precision": 0.03333333333333333,
+      "recall": 1.0,
+      "tp": 5,
+      "fp": 145,
+      "fn": 0,
+      "tn": 0,
+      "decision_cost": 29000.0,
+      "info_cost": 0.0,
+      "total_cost": 29000.0,
+      "questions_avg": 0.0,
+      "human_review_rate": 1.0,
+      "brier": 0.03356666666666666,
+      "stemi_caught": 5,
+      "stemi_missed": 0,
+      "false_alarms": 145
+    },
+    "P3_entropy": {
+      "n": 150,
+      "accuracy": 0.4266666666666667,
+      "precision": 0.054945054945054944,
+      "recall": 1.0,
+      "tp": 5,
+      "fp": 86,
+      "fn": 0,
+      "tn": 59,
+      "decision_cost": 17200.0,
+      "info_cost": 1200.0,
+      "total_cost": 18400.0,
+      "questions_avg": 4.0,
+      "human_review_rate": 0.6066666666666667,
+      "brier": 0.019593643909077352,
+      "stemi_caught": 5,
+      "stemi_missed": 0,
+      "false_alarms": 86
+    },
+    "P3_cost": {
+      "n": 150,
+      "accuracy": 0.4266666666666667,
+      "precision": 0.054945054945054944,
+      "recall": 1.0,
+      "tp": 5,
+      "fp": 86,
+      "fn": 0,
+      "tn": 59,
+      "decision_cost": 17200.0,
+      "info_cost": 1200.0,
+      "total_cost": 18400.0,
+      "questions_avg": 4.0,
+      "human_review_rate": 0.6066666666666667,
+      "brier": 0.019593643909077352,
+      "stemi_caught": 5,
+      "stemi_missed": 0,
+      "false_alarms": 86
+    }
+  },
+  "p3_entropy_failures": [
+    {
+      "id": 0,
+      "truth": "artifact",
+      "action": "ESCALATE",
+      "p_stemi": 0.0019105846388995033,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "yes"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 1,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.0017398869073510224,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "yes"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "no"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 4,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.038929440389294405,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "no"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "no"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 5,
+      "truth": "artifact",
+      "action": "ESCALATE",
+      "p_stemi": 0.0019105846388995033,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "yes"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 6,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.006299832660694952,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "no"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 8,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.03655352480417755,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "yes"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 9,
+      "truth": "artifact",
+      "action": "ESCALATE",
+      "p_stemi": 0.0019105846388995033,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "yes"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 10,
+      "truth": "artifact",
+      "action": "ESCALATE",
+      "p_stemi": 0.0022935779816513763,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "no"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 12,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.006299832660694952,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "no"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "no"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    },
+    {
+      "id": 13,
+      "truth": "hyperventilation",
+      "action": "ESCALATE",
+      "p_stemi": 0.03655352480417755,
+      "questions": 4,
+      "asked": [
+        {
+          "name": "poor_signal",
+          "answer": "no"
+        },
+        {
+          "name": "mishandling",
+          "answer": "yes"
+        },
+        {
+          "name": "heavy_exercise",
+          "answer": "yes"
+        },
+        {
+          "name": "chest_pain",
+          "answer": "yes"
+        }
+      ],
+      "kind": "false_alarm"
+    }
+  ]
+}
